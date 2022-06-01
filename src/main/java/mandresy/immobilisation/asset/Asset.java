@@ -42,6 +42,6 @@ public class Asset {
     private byte usage;
 
     @Column(nullable = false)
-    private DeprecationType deprecationType;
+    private String deprecationType;
 
 }
