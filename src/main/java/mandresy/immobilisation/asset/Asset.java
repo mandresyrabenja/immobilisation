@@ -1,8 +1,6 @@
 package mandresy.immobilisation.asset;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import mandresy.immobilisation.deprecationType.DeprecationType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -43,10 +41,7 @@ public class Asset {
     @Column(nullable = false)
     private byte usage;
 
-    @org.springframework.data.annotation.Transient
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deprecation_type_id")
-    @JsonBackReference("asset_deprecation")
+    @Column(nullable = false)
     private DeprecationType deprecationType;
 
 }
