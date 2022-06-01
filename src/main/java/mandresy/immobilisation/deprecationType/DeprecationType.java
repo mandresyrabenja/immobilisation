@@ -1,7 +1,8 @@
-package mandresy.immobilisation.asset;
+package mandresy.immobilisation.deprecationType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import mandresy.immobilisation.asset.Asset;
 
 import javax.persistence.*;
 import java.util.Collection;

@@ -2,6 +2,7 @@ package mandresy.immobilisation.asset;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import mandresy.immobilisation.deprecationType.DeprecationType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
