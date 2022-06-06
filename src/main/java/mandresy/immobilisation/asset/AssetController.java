@@ -32,7 +32,7 @@ public class AssetController {
             );
 
         } catch (IllegalStateException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             return new ResponseEntity<>(
                     e.getMessage(),
                     HttpStatus.NOT_ACCEPTABLE

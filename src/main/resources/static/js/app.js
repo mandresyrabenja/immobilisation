@@ -36,7 +36,6 @@ var v = new Vue({
         search: { text: '' },
         emptyResult: false,
         newProduct: {
-            "id": 0,
             "name": "",
             "purchasePrice": 0,
             "usage": 0,
@@ -48,8 +47,6 @@ var v = new Vue({
         formValidate: [],
         successMSG: '',
 
-        FILE: null,
-
         //pagination
         currentPage: 0,
         rowCountPage: 5,
@@ -60,49 +57,6 @@ var v = new Vue({
         this.showAll();
     },
     methods: {
-        onFileChange(e) {
-            var files = e.target.files;
-            if (!files.length)
-                return;
-            v.FILE = files[0];
-            v.createImage(files[0]);
-        },
-        createImage(file) {
-            v.newProduct.picture = new Image();
-            var reader = new FileReader();
-            reader.onload = (e) => {
-                v.newProduct.picture = e.target.result;
-                v.chooseProduct.picture = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-        getCars() {
-            axios.get(this.url + "car/showall").then(function(response) {
-                if (response.data.cars == null) {
-                    v.noResult()
-                } else {
-                    v.cars = response.data.cars;
-                }
-            })
-        },
-        getGuides() {
-            axios.get(this.url + "guide/showall").then(function(response) {
-                if (response.data.guides == null) {
-                    v.noResult()
-                } else {
-                    v.guides = response.data.guides;
-                }
-            })
-        },
-        getCategory() {
-            axios.get(this.url + "experience_category/showall").then(function(response) {
-                if (response.data.categories == null) {
-                    v.noResult()
-                } else {
-                    v.categories = response.data.categories;
-                }
-            })
-        },
         showAll() {
             axios.get(this.url).then(function(response) {
                 if (response.data == null) {
@@ -123,21 +77,18 @@ var v = new Vue({
             })
         },
         addProduct() {
-            var formData = v.formData(v.newProduct);
-            formData.append('file', v.FILE);
-            axios.post(this.url + "experience/addProduct", formData).then(function(response) {
-                if (response.data.error) {
-                    v.formValidate = response.data.msg;
-                } else {
-                    v.successMSG = response.data.msg;
+
+            axios.post(this.url, v.newProduct)
+                .then(function(response) {
+                    v.successMSG = response.data;
                     v.clearAll();
                     v.clearMSG();
-                }
-            })
+                }).catch(function (error) {
+                    console.log(error);
+                });
         },
         updateProduct() {
             var formData = v.formData(v.chooseProduct);
-            formData.append('file', v.FILE);
             axios.post(this.url + "experience/updateProduct", formData).then(function(response) {
                 if (response.data.error) {
                     v.formValidate = response.data.msg;
@@ -187,19 +138,12 @@ var v = new Vue({
         },
         clearAll() {
             v.newProduct = {
-                experience_id: '',
-                name: '',
-                category_id: '',
-                category: '',
-                description: '',
-                car_id: '',
-                driver: '',
-                max_traveler: '',
-                first_guide: '',
-                guide1: '',
-                second_guide: '',
-                guide2: '',
-                picture: ''
+                "name": "",
+                "purchasePrice": 0,
+                "usage": 0,
+                "deprecationType": "",
+                "purchaseDate": "",
+                "commissioningDate": ""
             };
             v.formValidate = false;
             v.addModal = false;
