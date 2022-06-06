@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,6 +21,11 @@ import java.util.List;
 public class AssetController {
 
     private final AssetService assetService;
+
+    @GetMapping(path = "/{id}/deprecation")
+    public List<AssetDeprecation> getAssetDeprecation(@PathVariable BigDecimal id){
+        return assetService.getAssetDeprecation(id);
+    }
 
     @PostMapping
     public ResponseEntity<String> createAsset(@RequestBody Asset asset) {

@@ -2,6 +2,7 @@ package mandresy.immobilisation.asset;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -11,10 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AssetServiceImplTest {
@@ -41,6 +47,36 @@ class AssetServiceImplTest {
     @AfterEach
     void tearDown() {
         asset = null;
+    }
+
+    @Test
+    @DisplayName("Linear deprecation calculus")
+    void itShouldCalculateAssetYearlyLinearDeprecation() {
+        //given
+        asset = new Asset(
+                BigDecimal.valueOf(1L),
+                "voiture",
+                10_000,
+                LocalDate.of(2017, Month.JANUARY, 3),
+                LocalDate.of(2017, Month.APRIL, 6),
+                (byte)5,
+                "linear"
+        );
+        when(assetRepository.findById(any(BigDecimal.class))).thenReturn(Optional.of(asset));
+        List<AssetDeprecation> expected = List.of(
+                new AssetDeprecation(2017, 1500.0, 8500.0),
+                new AssetDeprecation(2018, 2000.0, 6500.0),
+                new AssetDeprecation(2019, 2000.0, 4500.0),
+                new AssetDeprecation(2020, 2000.0, 2500.0),
+                new AssetDeprecation(2021, 2000.0, 500.0),
+                new AssetDeprecation(2022, 500.0, 0.0)
+        );
+
+        //when
+        List<AssetDeprecation> actual = underTest.getAssetDeprecation(BigDecimal.valueOf(1L));
+
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
