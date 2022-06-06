@@ -1,10 +1,12 @@
 package mandresy.immobilisation.asset;
 
-import mandresy.immobilisation.http.HttpReponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controlleur HTTP de l'entité Asset
@@ -13,11 +15,35 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api/v1/assets")
+@RequiredArgsConstructor
+@Slf4j
 public class AssetController {
 
+    private final AssetService assetService;
+
     @PostMapping
-    public HttpReponse createAsset(@RequestBody Asset asset) {
-        return null;
+    public ResponseEntity<String> createAsset(@RequestBody Asset asset) {
+
+        try{
+            assetService.createAsset(asset);
+            return new ResponseEntity<>(
+                    String.format("Actif immobilisé %s crée avec succès", asset.getName()),
+                    HttpStatus.CREATED
+            );
+
+        } catch (IllegalStateException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(
+                    e.getMessage(),
+                    HttpStatus.NOT_ACCEPTABLE
+            );
+        }
+    }
+
+    @GetMapping
+    public List<Asset> listAssets(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return assetService.listAsset(page, size);
     }
 
 }

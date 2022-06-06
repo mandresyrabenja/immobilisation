@@ -1,6 +1,7 @@
 package mandresy.immobilisation.asset;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.Period;
@@ -43,6 +44,6 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public List<Asset> listAsset(int pageNumber, int pageSize) {
-        return null;
+        return assetRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
     }
 }

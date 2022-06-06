@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $page_title ?></title>
+    <link rel="icon" href="<?= img_url('maki.png') ?>">
+    <link rel="stylesheet" href="<?= css_url('bulma.min')?>">
+    <link rel="stylesheet" href="<?= css_url('bootstrap.min')?>">
+    <link rel="stylesheet" href="<?= css_url('animate.min')?>">
+    <link rel="stylesheet" href="<?= css_url('font-awesome.min')?>">
+    <link rel="stylesheet" href="<?= css_url('style')?>">
+
+    <script src="<?= js_url('vue.min')?>"></script>
+    <script src="<?= js_url('axios.min')?>"></script>
+    <script src="<?= js_url('jquery.min')?>"></script>
+
+</head>
+
+<hr>
+<ul class="nav justify-content-center" id="crud_title">
+    <li class="nav-item">
+        <a class="nav-link h4" href="<?php echo site_url('experience');?>">Expérience</a>
+    </li>
+</ul>
+<hr>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <transition
+                    enter-active-class="animated fadeInLeft"
+                    leave-active-class="animated fadeOutRight">
+                <div class="notification is-success text-center px-5 top-middle" v-if="successMSG" @click="successMSG = false">{{successMSG}}</div>
+            </transition>
+            <div class="col-md-12">
+                <table class="table my-3" id="menu_header">
+                    <tr>
+                        <td> <button class="btn btn-default btn-block" @click="addModal= true">Ajouter</button></td>
+                        <td><input placeholder="Rechercher..." type="search" class="form-control" v-model="search.text" @keyup="searchProduct" name="search"></td>
+                    </tr>
+                </table>
+                <table class="table is-bordered is-hoverable">
+                    <thead id="table_head" class="text-white" >
+
+                    <th class="text-white">ID</th>
+                    <th class="text-white">Nom</th>
+                    <th class="text-white">Catégorie</th>
+                    <th class="text-white">Description</th>
+                    <th class="text-white">Chauffeur</th>
+                    <th class="text-white">Max des voyageurs</th>
+                    <th class="text-white">Premier guide</th>
+                    <th class="text-white">Deuxième guide</th>
+                    <th colspan="2" class="text-center text-white">Action</th>
+                    </thead>
+                    <tbody class="table-light">
+                    <tr v-for="produit in produits" class="table-default">
+                        <td>{{produit.experience_id}}</td>
+                        <td>{{produit.name}}</td>
+                        <td>{{produit.category}}</td>
+                        <td>{{produit.description | limit100}}...</td>
+                        <td>{{produit.driver}}</td>
+                        <td>{{produit.max_traveler}}</td>
+                        <td>{{produit.guide1}}</td>
+                        <td>{{produit.guide2}}</td>
+                        <td><button class="btn btn-info fa fa-edit" @click="editModal = true; selectProduct(produit)"></button></td>
+                        <td><button class="btn btn-danger fa fa-trash" @click="deleteModal = true; selectProduct(produit)"></button></td>
+                    </tr>
+                    <tr v-if="emptyResult">
+                        <td colspan="10" rowspan="4" class="text-center h1">Aucun produit trouvés</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+        <pagination
+                :current_page="currentPage"
+                :row_count_page="rowCountPage"
+                @page-update="pageUpdate"
+                :total_users="totalProduits"
+                :page_range="pageRange"
+        >
+        </pagination>
+    </div>
+    <?php include 'modal.php';?>
+
+</div>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="<?= base_url() ?>">
+            <img src="<?= img_url('maki.png') ?>" alt="Aye-aye" style="height: 50px">
+            Aye-aye
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= site_url('client') ?>">Utilisateur</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= site_url('motel') ?>">Hotel</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= site_url('experience') ?>">Expérience</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+
+</body>
+
+<script src="<?= js_url('pagination') ?>"></script>
+<script src="<?= js_url('app') ?>"></script>
+
+</html>

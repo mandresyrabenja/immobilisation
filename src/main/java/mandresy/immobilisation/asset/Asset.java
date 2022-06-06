@@ -1,5 +1,7 @@
 package mandresy.immobilisation.asset;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,9 +35,13 @@ public class Asset {
     private double purchasePrice;
 
     @Column(nullable = false)
+    @JsonProperty("purchaseDate")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate purchaseDate;
 
     @Column(nullable = false)
+    @JsonProperty("commissioningDate")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate commissioningDate;
 
     @Column(nullable = false)
