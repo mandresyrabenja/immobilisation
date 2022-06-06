@@ -25,7 +25,7 @@ Vue.component('modal', { //modal
 var v = new Vue({
     el: '#app',
     data: {
-        url: 'http://localhost/aye-aye/',
+        url: 'http://localhost:8080/api/v1/assets',
         addModal: false,
         editModal: false,
         deleteModal: false,
@@ -36,19 +36,13 @@ var v = new Vue({
         search: { text: '' },
         emptyResult: false,
         newProduct: {
-            experience_id: '',
-            name: '',
-            category_id: '',
-            category: '',
-            description: '',
-            car_id: '',
-            driver: '',
-            max_traveler: '',
-            first_guide: '',
-            guide1: '',
-            second_guide: '',
-            guide2: '',
-            picture: ''
+            "id": 0,
+            "name": "",
+            "purchasePrice": 0,
+            "usage": 0,
+            "deprecationType": "",
+            "purchaseDate": "",
+            "commissioningDate": ""
         },
         chooseProduct: {},
         formValidate: [],
@@ -64,9 +58,6 @@ var v = new Vue({
     },
     created() {
         this.showAll();
-        this.getCategory();
-        this.getCars();
-        this.getGuides();
     },
     methods: {
         onFileChange(e) {
@@ -113,11 +104,11 @@ var v = new Vue({
             })
         },
         showAll() {
-            axios.get(this.url + "experience/showAll").then(function(response) {
-                if (response.data.produits == null) {
+            axios.get(this.url).then(function(response) {
+                if (response.data == null) {
                     v.noResult()
                 } else {
-                    v.getData(response.data.produits);
+                    v.getData(response.data);
                 }
             })
         },

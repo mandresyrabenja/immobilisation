@@ -8,9 +8,9 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" class="form-control" :class="{'is-valid': formValidate.name}" name="name" v-model="newProduct.name">                
+                    <input type="text" class="form-control" :class="{'is-valid': formValidate.name}" name="name" v-model="newProduct.name">
                     <div class="has-text-danger" v-html="formValidate.name"> </div>
-                </div>    
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -19,9 +19,9 @@
                         <option v-for="cat in categories" :value="cat.category_id">
                             {{cat.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.category_id"> </div>
-                </div>            
+                </div>
             </div>
         </div>
         <div class="row">
@@ -32,14 +32,14 @@
                         <option v-for="car in cars" :value="car.car_id">
                             {{car.driver}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.car_id"> </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Voyageurs max</label>
-                    <input type="number" class="form-control" :class="{'is-valid': formValidate.max_traveler}" name="max_traveler" v-model="newProduct.max_traveler">                
+                    <input type="number" class="form-control" :class="{'is-valid': formValidate.max_traveler}" name="max_traveler" v-model="newProduct.max_traveler">
                     <div class="has-text-danger" v-html="formValidate.max_traveler"> </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                         <option v-for="guide in guides" :value="guide.guide_id">
                             {{guide.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.first_guide"> </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         <option v-for="guide in guides" :value="guide.guide_id">
                             {{guide.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.second_guide_id"> </div>
                 </div>
             </div>
@@ -107,9 +107,9 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" class="form-control" :class="{'is-valid': formValidate.name}" name="name" v-model="chooseProduct.name">                
+                    <input type="text" class="form-control" :class="{'is-valid': formValidate.name}" name="name" v-model="chooseProduct.name">
                     <div class="has-text-danger" v-html="formValidate.name"> </div>
-                </div>    
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -118,9 +118,9 @@
                         <option v-for="cat in categories" :value="cat.category_id">
                             {{cat.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.category_id"> </div>
-                </div>            
+                </div>
             </div>
         </div>
         <div class="row">
@@ -131,14 +131,14 @@
                         <option v-for="car in cars" :value="car.car_id">
                             {{car.driver}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.car_id"> </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Voyageurs max</label>
-                    <input type="number" class="form-control" :class="{'is-valid': formValidate.max_traveler}" name="max_traveler" v-model="chooseProduct.max_traveler">                
+                    <input type="number" class="form-control" :class="{'is-valid': formValidate.max_traveler}" name="max_traveler" v-model="chooseProduct.max_traveler">
                     <div class="has-text-danger" v-html="formValidate.max_traveler"> </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                         <option v-for="guide in guides" :value="guide.guide_id">
                             {{guide.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.first_guide"> </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@
                         <option v-for="guide in guides" :value="guide.guide_id">
                             {{guide.name}}
                         </option>
-                    </select>                
+                    </select>
                     <div class="has-text-danger" v-html="formValidate.second_guide_id"> </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                 <div class="form-group">
                     <label>Description</label>
                     <textarea cols="25" rows="4" type="text" class="form-control" :class="{'is-valid': formValidate.description}" name="description" v-model="chooseProduct.description">
-                    </textarea>                
+                    </textarea>
                     <div class="has-text-danger" v-html="formValidate.description"> </div>
                 </div>
             </div>
@@ -202,10 +202,10 @@
     <div slot="foot">
         <div class="row">
             <div class="col-md-6">
-                <button class="btn btn-danger" @click="deleteModal = false; deleteProduct()" >Effacer</button>                    
+                <button class="btn btn-danger" @click="deleteModal = false; deleteProduct()" >Effacer</button>
             </div>
             <div class="col-md-6">
-                <button class="btn" @click="deleteModal = false">Annuler</button>                        
+                <button class="btn" @click="deleteModal = false">Annuler</button>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ public class AssetServiceImpl implements AssetService {
         if( !DeprecationType.isValidDeprecationType(asset.getDeprecationType()) ) {
             throw new IllegalStateException(
                 "Type d'ammortissement \"" + asset.getDeprecationType() + "\" invalide. " +
-                "Il doît être \"linear\" pour linéaire ou \"regressive\" pour regressif."
+                "Il doît être \"linear\" pour linéaire ou \"degressive\" pour degréssif."
             );
         }
 
