@@ -13,6 +13,8 @@ public interface AssetService {
 
     List<Asset> listAsset(int pageNumber, int pageSize);
 
+    void deleteProduct(BigDecimal id);
+
     /**
      * Avoir le tableau d'ammortissement d'un actif immobilisé
      * @param id ID de l'actif immobilisé
