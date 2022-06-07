@@ -33,7 +33,7 @@ var v = new Vue({
         categories: [],
         cars: [],
         guides: [],
-        search: { text: '' },
+        search: { keyword: '' },
         emptyResult: false,
         newProduct: {
             "name": "",
@@ -68,14 +68,20 @@ var v = new Vue({
             })
         },
         searchProduct() {
-            var formData = v.formData(v.search);
-            axios.post(this.url + "experience/searchProduct", formData).then(function(response) {
-                if (response.data.produits == null) {
-                    v.noResult()
-                } else {
-                    v.getData(response.data.produits);
+            let formData = v.formData(v.search);
+            axios.get(this.url + "/search?keyword=" + v.search.keyword).then(
+                function(response) {
+                    if (response.data == null) {
+                        v.noResult()
+                    } else {
+                        v.getData(response.data);
+                    }
                 }
-            })
+            ).catch(
+                function(error) {
+                    console.log(error);
+                }
+            );
         },
         addProduct() {
 
@@ -175,7 +181,7 @@ var v = new Vue({
             v.refresh();
         },
         refresh() {
-            v.search.text ? v.searchProduct() : v.showAll();
+            v.search.keyword ? v.searchProduct() : v.showAll();
         }
     },
     filters: {

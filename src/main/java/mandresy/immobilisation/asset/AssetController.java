@@ -22,6 +22,11 @@ public class AssetController {
 
     private final AssetService assetService;
 
+    @GetMapping(path = "/search")
+    public List<Asset> searchAsset(@RequestParam String keyword) {
+        return assetService.searchAsset(keyword);
+    }
+
     @GetMapping(path = "/{id}/deprecation")
     public List<AssetDeprecation> getAssetDeprecation(@PathVariable BigDecimal id){
         try {

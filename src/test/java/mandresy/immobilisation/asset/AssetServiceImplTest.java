@@ -48,6 +48,23 @@ class AssetServiceImplTest {
         asset = null;
     }
 
+    @Test
+    void itShouldSearchAssetUsingKeyword() {
+        //given
+        String keyword = "foo";
+        when(assetRepository.findByNameContainsIgnoreCase(any(String.class))).thenReturn(
+                List.of(asset)
+        );
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        //when
+        List<Asset> actual = underTest.searchAsset(keyword);
+
+        //then
+        verify(assetRepository).findByNameContainsIgnoreCase(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue()).isEqualTo(keyword);
+        assertThat(actual).isEqualTo(List.of(asset));
+    }
 
     @Test
     @DisplayName("Degressive deprecation calculus")

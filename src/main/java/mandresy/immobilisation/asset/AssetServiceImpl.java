@@ -21,6 +21,11 @@ public class AssetServiceImpl implements AssetService {
     private final AssetRepository assetRepository;
 
     @Override
+    public List<Asset> searchAsset(String keyword) {
+        return assetRepository.findByNameContainsIgnoreCase(keyword);
+    }
+
+    @Override
     public List<AssetDeprecation> getAssetDeprecation(BigDecimal id) {
         Asset asset = assetRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("Aucun actif n'a %d comme ID", id)) );
