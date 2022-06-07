@@ -24,7 +24,12 @@ public class AssetController {
 
     @GetMapping(path = "/{id}/deprecation")
     public List<AssetDeprecation> getAssetDeprecation(@PathVariable BigDecimal id){
-        return assetService.getAssetDeprecation(id);
+        try {
+            return assetService.getAssetDeprecation(id);
+        }catch (IllegalStateException e) {
+            log.warn(e.getMessage());
+            return null;
+        }
     }
 
     @PostMapping

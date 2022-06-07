@@ -18,7 +18,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +46,36 @@ class AssetServiceImplTest {
     @AfterEach
     void tearDown() {
         asset = null;
+    }
+
+
+    @Test
+    @DisplayName("Degressive deprecation calculus")
+    void itShouldCalculateAssetYearlyDegressiveDeprecation() {
+        //given
+        asset = new Asset(
+                BigDecimal.valueOf(1L),
+                "foo",
+                100_000,
+                LocalDate.of(2017, Month.JANUARY, 3),
+                LocalDate.of(2017, Month.JULY, 1),
+                (byte)5,
+                "degressive"
+        );
+        when(assetRepository.findById(any(BigDecimal.class))).thenReturn(Optional.of(asset));
+        List<AssetDeprecation> expected = List.of(
+                new AssetDeprecation(2017, 17500, 82500 ),
+                new AssetDeprecation(2018, 28875 , 53625 ),
+                new AssetDeprecation(2019, 18768.75, 34856.25),
+                new AssetDeprecation(2020, 17428.125, 17428.125 ),
+                new AssetDeprecation(2021, 17428.125, 0)
+        );
+
+        //when
+        List<AssetDeprecation> actual = underTest.getAssetDeprecation(BigDecimal.valueOf(1L));
+
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
