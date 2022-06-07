@@ -3,7 +3,7 @@
 
 ## Fonctionnalités
 
-- Ajouter un actif immobilisé avec son prix d'acquisition, date d'acquisition, date de mise en service, type d'ammortissement(linéaire ou degréssif), durée d'utilisation en année
+- Ajouter un actif immobilisé avec son prix d'acquisition, date d'acquisition, date de mise en service, type d'ammortissement(linéaire ou dégressif), durée d'utilisation en année
 - Voir la liste des actifs imobilisés et le tableau d'ammortissement de chaque actif
 - Rechercher un actif en utilisant son nom, date d'acquisition, date de mise en service, son type d'ammortissement ou encore son prix d'acquisition
 

@@ -1,0 +1,60 @@
+.top-middle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+}
+
+
+/*validation text size*/
+
+.has-text-danger {
+    font-size: 0.75rem
+}
+
+
+/*pagination*/
+
+.pager .pagination>li>a,
+.pager .pagination>li>span {
+    color: #c72e13;
+}
+
+.pagination>li.page-item.active>a {
+    border: 1px solid #c72e13;
+    border-radius: 3px;
+    background: #c72e13;
+    color: #fff;
+}
+
+.navbar {
+    background-color: #18b399;
+}
+
+#crud_title {
+    color: #18b399;
+}
+
+#crud_title a:hover,
+#crud_title a:focus,
+#crud_title a:active {
+    color: #12a189;
+}
+
+hr {
+    border-top: 1px solid #ff2600;
+}
+
+#menu_header {
+    border-radius: 5px;
+    background: #c72e13;
+}
+
+#table_head {
+    background: #18b399;
+}
+
+.modal-card-head {
+    background: #18b399;
+}
