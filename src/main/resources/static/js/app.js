@@ -107,14 +107,15 @@ var v = new Vue({
             })
         },
         deleteProduct() {
-            var formData = v.formData(v.chooseProduct);
-            axios.post(this.url + "experience/deleteProduct", formData).then(function(response) {
-                if (!response.data.error) {
-                    v.successMSG = response.data.success;
+            axios.delete(this.url + "/" + v.chooseProduct.id).then(function(response) {
+                    v.successMSG = response.data;
                     v.clearAll();
                     v.clearMSG();
+            }).catch(
+                function (error) {
+                    console.log(error);
                 }
-            })
+            );
         },
         formData(obj) {
             var formData = new FormData();

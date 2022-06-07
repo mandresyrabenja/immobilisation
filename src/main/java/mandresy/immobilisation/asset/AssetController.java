@@ -27,6 +27,19 @@ public class AssetController {
         return assetService.searchAsset(keyword);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public String deleteAsset(@PathVariable BigDecimal id) {
+        try{
+            assetService.deleteProduct(id);
+            String msg = "Actif numero " + id + " effacé avec succès";
+            log.info(msg);
+            return msg;
+        } catch (IllegalStateException e) {
+            log.warn(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
     @GetMapping(path = "/{id}/deprecation")
     public List<AssetDeprecation> getAssetDeprecation(@PathVariable BigDecimal id){
         try {
