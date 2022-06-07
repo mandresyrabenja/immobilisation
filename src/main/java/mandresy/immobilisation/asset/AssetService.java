@@ -19,4 +19,11 @@ public interface AssetService {
      * @return Le tableau d'ammortissement d'un actif immobilisé
      */
     List<AssetDeprecation> getAssetDeprecation(BigDecimal id);
+
+    /**
+     * Rechercher un actif immobilisé en utilisant un mot-clé
+     * @param keyword Mots clés
+     * @return Liste des actifs correspondants
+     */
+    List<Asset> searchAsset(String keyword);
 }
