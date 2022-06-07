@@ -1,11 +1,15 @@
 package mandresy.immobilisation.asset;
 
+import com.lowagie.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mandresy.immobilisation.pdf.AssetDeprecationPDFGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -21,6 +25,21 @@ import java.util.List;
 public class AssetController {
 
     private final AssetService assetService;
+
+    @GetMapping("/{id}/pdf")
+    public void generator(
+            @PathVariable BigDecimal id,
+            HttpServletResponse response) throws DocumentException, IOException {
+
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=ammortissement-article-numero-"+id+".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<AssetDeprecation> deprecations = assetService.getAssetDeprecation(id);
+        AssetDeprecationPDFGenerator pdfGenerator = new AssetDeprecationPDFGenerator(deprecations, id);
+        pdfGenerator.generate(response);
+    }
 
     @GetMapping(path = "/search")
     public List<Asset> searchAsset(@RequestParam String keyword) {
