@@ -7,12 +7,12 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import mandresy.immobilisation.asset.AssetDeprecation;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,6 +24,7 @@ import java.util.List;
 public class AssetDeprecationPDFGenerator {
 
     private List<AssetDeprecation> deprecations;
+    private BigDecimal assetId;
 
     public void generate(HttpServletResponse response) throws DocumentException, IOException {
         // Création de l'objet document
@@ -36,7 +37,7 @@ public class AssetDeprecationPDFGenerator {
         Font fontTiltle = FontFactory.getFont(FontFactory.TIMES_ROMAN);
         fontTiltle.setSize(20);
         // Creation de l'objet contenant le paragraphe
-        Paragraph paragraph = new Paragraph("Tableau d'ammortissement", fontTiltle);
+        Paragraph paragraph = new Paragraph("Tableau d'ammortissement de l'article numero " + assetId, fontTiltle);
         paragraph.setAlignment(Paragraph.ALIGN_CENTER);
 
         // Ajout dans le document

@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,16 +30,15 @@ public class AssetController {
     public void generator(
             @PathVariable BigDecimal id,
             HttpServletResponse response) throws DocumentException, IOException {
+
         response.setContentType("application/pdf");
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
-        String currentDateTime = dateFormat.format(new Date());
-        String headerkey = "Content-Disposition";
-        String headervalue = "attachment; filename=pdf_"+currentDateTime+".pdf";
-        response.setHeader(headerkey, headervalue);
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=ammortissement-article-numero-"+id+".pdf";
+        response.setHeader(headerKey, headerValue);
 
         List<AssetDeprecation> deprecations = assetService.getAssetDeprecation(id);
-        AssetDeprecationPDFGenerator pdfGeneretor = new AssetDeprecationPDFGenerator(deprecations);
-        pdfGeneretor.generate(response);
+        AssetDeprecationPDFGenerator pdfGenerator = new AssetDeprecationPDFGenerator(deprecations, id);
+        pdfGenerator.generate(response);
     }
 
     @GetMapping(path = "/search")
