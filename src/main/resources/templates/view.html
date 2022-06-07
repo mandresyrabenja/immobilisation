@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ammortissement d'immobilisation</title>
-    <link rel="icon" th:href="@{/img/maki.png}">
+    <link rel="icon" th:href="@{/img/icon.png}">
     <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/animate.min.css}">
@@ -45,7 +45,7 @@
             <div class="col-md-12">
                 <table class="table my-3" id="menu_header">
                     <tr>
-                        <td> <button class="btn btn-default btn-block" @click="addModal= true">Ajouter</button></td>
+                        <td> <button class="btn btn-default btn-block" @click="addModal= true">Créer</button></td>
                         <td><input placeholder="Rechercher..." type="search" class="form-control" v-model="search.text" @keyup="searchProduct" name="search"></td>
                     </tr>
                 </table>
@@ -160,17 +160,37 @@
 
 
 
-    <!--modifier-->
+    <!--Table d'ammortissement-->
 
     <modal v-if="editModal" @close="clearAll()">
-        <h3 slot="head" >Modifier l'éxperience</h3>
+        <h3 slot="head" >{{chooseProduct.name}}</h3>
         <div slot="body" class="row">
             <div class="col-md-12">
-                Ammortissement
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" rowspan="2">Année</th>
+                            <th v-if="chooseProduct.deprecationType === 'linear'" scope="col" colspan="2">
+                                Ammortissement linéaire
+                            </th>
+                            <th v-else scope="col" colspan="2">
+                                Ammortissement degréssif
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Montant de l'amortissement</th>
+                            <th scope="col">Valeur nette comptable au 31/12</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="deprecation in deprecations">
+                            <td>{{deprecation.year}}</td>
+                            <td>{{deprecation.deprecationValue}}</td>
+                            <td>{{deprecation.netBookValue}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div slot="foot">
-            <button class="btn btn-success" @click="updateProduct">Modifier</button>
         </div>
     </modal>
 

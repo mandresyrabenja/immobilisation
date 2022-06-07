@@ -46,6 +46,7 @@ var v = new Vue({
         chooseProduct: {},
         formValidate: [],
         successMSG: '',
+        deprecations: [],
 
         //pagination
         currentPage: 0,
@@ -130,6 +131,16 @@ var v = new Vue({
 
         selectProduct(produit) {
             v.chooseProduct = produit;
+            v.findDeprecation(produit.id);
+        },
+        findDeprecation(id) {
+            axios.get(this.url + '/' + id + '/deprecation')
+                .then(function(response) {
+                    v.deprecations = response.data;
+                    console.log(response.data);
+                }).catch(function (error) {
+                console.log(error);
+            });
         },
         clearMSG() {
             setTimeout(function() {
