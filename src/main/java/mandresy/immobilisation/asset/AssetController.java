@@ -1,12 +1,19 @@
 package mandresy.immobilisation.asset;
 
+import com.lowagie.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mandresy.immobilisation.pdf.AssetDeprecationPDFGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +28,22 @@ import java.util.List;
 public class AssetController {
 
     private final AssetService assetService;
+
+    @GetMapping("/{id}/pdf")
+    public void generator(
+            @PathVariable BigDecimal id,
+            HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+        String currentDateTime = dateFormat.format(new Date());
+        String headerkey = "Content-Disposition";
+        String headervalue = "attachment; filename=pdf_"+currentDateTime+".pdf";
+        response.setHeader(headerkey, headervalue);
+
+        List<AssetDeprecation> deprecations = assetService.getAssetDeprecation(id);
+        AssetDeprecationPDFGenerator pdfGeneretor = new AssetDeprecationPDFGenerator(deprecations);
+        pdfGeneretor.generate(response);
+    }
 
     @GetMapping(path = "/search")
     public List<Asset> searchAsset(@RequestParam String keyword) {
