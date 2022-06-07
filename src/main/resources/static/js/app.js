@@ -95,16 +95,7 @@ var v = new Vue({
                 });
         },
         updateProduct() {
-            var formData = v.formData(v.chooseProduct);
-            axios.post(this.url + "experience/updateProduct", formData).then(function(response) {
-                if (response.data.error) {
-                    v.formValidate = response.data.msg;
-                } else {
-                    v.successMSG = response.data.success;
-                    v.clearAll();
-                    v.clearMSG();
-                }
-            })
+            document.location = this.url + '/' + v.chooseProduct.id + '/pdf';
         },
         deleteProduct() {
             axios.delete(this.url + "/" + v.chooseProduct.id).then(function(response) {
