@@ -33,7 +33,11 @@ var v = new Vue({
         categories: [],
         cars: [],
         guides: [],
-        search: { keyword: '' },
+        search: {
+            keyword: '',
+            startDate: '',
+            endDate: ''
+        },
         emptyResult: false,
         newProduct: {
             "name": "",
@@ -69,19 +73,43 @@ var v = new Vue({
         },
         searchProduct() {
             let formData = v.formData(v.search);
-            axios.get(this.url + "/search?keyword=" + v.search.keyword).then(
-                function(response) {
-                    if (response.data == null) {
-                        v.noResult()
-                    } else {
-                        v.getData(response.data);
+            if(v.search.startDate === '' && v.search.endDate === '' && v.search.keyword === '') {
+              this.showAll();
+            } else if(v.search.startDate === '' || v.search.endDate === '') {
+                axios.get(this.url + "/search?keyword=" + v.search.keyword).then(
+                    function (response) {
+                        if (response.data == null) {
+                            v.noResult()
+                        } else {
+                            v.getData(response.data);
+                        }
                     }
-                }
-            ).catch(
-                function(error) {
-                    console.log(error);
-                }
-            );
+                ).catch(
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+            } else {
+                axios.get(this.url + "/advanced-search?keyword=" + v.search.keyword + "&startDate=" + v.search.startDate
+                    + "&endDate=" + v.search.endDate)
+                    .then(
+                    function (response) {
+                        v.search.startDate = '';
+                        v.search.endDate = '';
+                        if (response.data == null) {
+                            v.noResult()
+                        } else {
+                            v.getData(response.data);
+                        }
+                    }
+                ).catch(
+                    function (error) {
+                        v.search.startDate = '';
+                        v.search.endDate = '';
+                        console.log(error);
+                    }
+                );
+            }
         },
         addProduct() {
 
