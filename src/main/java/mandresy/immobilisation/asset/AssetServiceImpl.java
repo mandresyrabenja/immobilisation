@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Vector;
@@ -19,6 +20,11 @@ import java.util.Vector;
 public class AssetServiceImpl implements AssetService {
 
     private final AssetRepository assetRepository;
+
+    @Override
+    public List<Asset> advancedSearch(String keyword, LocalDate startDate, LocalDate endDate) {
+        return assetRepository.advancedSearch(keyword, startDate, endDate);
+    }
 
     @Override
     public void deleteProduct(BigDecimal id) {

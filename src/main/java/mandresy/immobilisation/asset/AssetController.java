@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -25,6 +26,16 @@ import java.util.List;
 public class AssetController {
 
     private final AssetService assetService;
+
+    @GetMapping("/advanced-search")
+    public List<Asset> advancedSearch(@RequestParam String keyword,
+                                      @RequestParam(name = "startDate") String SStartDate,
+                                      @RequestParam(name = "endDate") String SEndDate) {
+        LocalDate startDate = LocalDate.parse(SStartDate);
+        LocalDate endDate = LocalDate.parse(SEndDate);
+
+        return assetService.advancedSearch(keyword, startDate, endDate);
+    }
 
     @GetMapping("/{id}/pdf")
     public void generator(
