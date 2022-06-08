@@ -42,8 +42,21 @@
             <div class="col-md-12">
                 <table class="table my-3" id="menu_header">
                     <tr>
-                        <td> <button class="btn btn-default btn-block" @click="addModal= true">Créer</button></td>
-                        <td><input placeholder="Rechercher..." type="search" class="form-control" v-model="search.keyword" @keyup="searchProduct" name="search"></td>
+                        <td>
+                            <button class="btn btn-default btn-block" @click="addModal= true">Créer</button>
+                        </td>
+                        <td>
+                            <input placeholder="Rechercher..." type="search" class="form-control" v-model="search.keyword" name="search">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" v-model="search.startDate">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" v-model="search.endDate">
+                        </td>
+                        <td>
+                            <button class="btn btn-success fa fa-search" @click="searchProduct"></button>
+                        </td>
                     </tr>
                 </table>
                 <table class="table is-bordered is-hoverable">

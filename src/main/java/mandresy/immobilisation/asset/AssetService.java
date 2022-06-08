@@ -1,6 +1,7 @@
 package mandresy.immobilisation.asset;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,4 +29,6 @@ public interface AssetService {
      * @return Liste des actifs correspondants
      */
     List<Asset> searchAsset(String keyword);
+
+    List<Asset> advancedSearch(String keyword, LocalDate startDate, LocalDate endDate);
 }
